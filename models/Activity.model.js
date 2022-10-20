@@ -1,5 +1,4 @@
 const { Schema, model } = require("mongoose");
-const { userCollectionName } = require("./User.model");
 
 const activitySchema = new Schema({
   description: {
@@ -8,7 +7,7 @@ const activitySchema = new Schema({
   },
   owner: {
     type: Schema.Types.ObjectId,
-    ref: userCollectionName,
+    ref: "User",
   },
 });
 
