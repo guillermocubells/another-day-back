@@ -95,6 +95,8 @@ const moodSchema = new Schema(
     },
     date: {
       type: Date,
+      default: Date.now,
+      required: true,
     },
     image: {
       type: String,
