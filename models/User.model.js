@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+// const { moodCollectionName } = require("./Mood.model");
 
 // TODO: Please make sure you edit the User model to whatever makes sense in this case
 const userSchema = new Schema(
@@ -20,7 +21,6 @@ const userSchema = new Schema(
     },
   },
   {
-    // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
 );

@@ -1,5 +1,4 @@
 const { Schema, model } = require("mongoose");
-const { userCollectionName } = require("./User.model");
 
 const moodSchema = new Schema(
   {
@@ -93,12 +92,16 @@ const moodSchema = new Schema(
     },
     description: {
       type: String,
-      required: true,
     },
-    // images:
+    date: {
+      type: Date,
+    },
+    image: {
+      type: String,
+    },
     owner: {
       type: Schema.Types.ObjectId,
-      ref: userCollectionName,
+      ref: "User",
     },
   },
   { timestamps: true }
