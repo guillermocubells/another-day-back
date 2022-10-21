@@ -1,26 +1,22 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User.model");
-
-// const goHomeYoureDrunk = require("../utils/go-home-youre-drunk");
+const { BAD_REQUEST } = require("../utils/status-codes");
 
 function isLoggedIn(req, res, next) {
   if (!req.headers.authorization) {
-    return;
-    // return goHomeYoureDrunk(res);
+    return res.status(UNAUTHORIZED).json({ errorMessage: "Why you do dis" });
   }
 
   const [bearer, token] = req.headers.authorization.split(" ");
 
   if (bearer !== "Bearer") {
-    return;
-    // return goHomeYoureDrunk(res);
+    return res.status(UNAUTHORIZED).json({ errorMessage: "Why you do dis" });
   }
 
   const tokenData = jwt.decode(token);
 
   if (!tokenData) {
-    return;
-    // return goHomeYoureDrunk(res);
+    return res.status(UNAUTHORIZED).json({ errorMessage: "Why you do dis" });
   }
 
   User.findById(tokenData._id)
@@ -30,8 +26,7 @@ function isLoggedIn(req, res, next) {
     })
     .catch((err) => {
       console.log("err:", err);
-      return;
-      //   return goHomeYoureDrunk(res, 500);
+      return res.status(500).json({ errorMessage: "Why you do dis" });
     });
 }
 
