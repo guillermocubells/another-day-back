@@ -6,11 +6,7 @@ const {
   MOOD_GOOD,
   MOOD_GREAT,
   MOOD_STATUS_ENUM,
-  MOOD_SUBSTATUS_AWFUL,
-  MOOD_SUBSTATUS_BAD,
-  MOOD_SUBSTATUS_OKAY,
-  MOOD_SUBSTATUS_GOOD,
-  MOOD_SUBSTATUS_GREAT,
+  MOOD_SUBSTATUS,
 } = require("../utils/mood-enum-data");
 
 const moodSchema = new Schema(
@@ -22,19 +18,19 @@ const moodSchema = new Schema(
     },
     substatus: {
       [MOOD_AWFUL]: {
-        enum: MOOD_SUBSTATUS_AWFUL,
+        enum: MOOD_SUBSTATUS[MOOD_AWFUL],
       },
       [MOOD_BAD]: {
-        enum: MOOD_SUBSTATUS_BAD,
+        enum: MOOD_SUBSTATUS[MOOD_BAD],
       },
       [MOOD_OKAY]: {
-        enum: MOOD_SUBSTATUS_OKAY,
+        enum: MOOD_SUBSTATUS[MOOD_OKAY],
       },
       [MOOD_GOOD]: {
-        enum: MOOD_SUBSTATUS_GOOD,
+        enum: MOOD_SUBSTATUS[MOOD_GOOD],
       },
       [MOOD_GREAT]: {
-        enum: MOOD_SUBSTATUS_GREAT,
+        enum: MOOD_SUBSTATUS[MOOD_GREAT],
       },
     },
     activities: [{ type: Schema.Types.ObjectId, ref: "Activity" }],
