@@ -1,4 +1,16 @@
-const MOOD_STATUS_ENUM = ["Awful", "Bad", "Okay", "Good", "Great"];
+const MOOD_AWFUL = "Awful";
+const MOOD_BAD = "Bad";
+const MOOD_OKAY = "Okay";
+const MOOD_GOOD = "Good";
+const MOOD_GREAT = "Great";
+
+const MOOD_STATUS_ENUM = [
+  MOOD_AWFUL,
+  MOOD_BAD,
+  MOOD_OKAY,
+  MOOD_GOOD,
+  MOOD_GREAT,
+];
 
 const MOOD_SUBSTATUS_AWFUL = [
   "Stressed",
@@ -56,6 +68,11 @@ const MOOD_SUBSTATUS_GREAT = [
 ];
 
 module.exports = {
+  MOOD_AWFUL,
+  MOOD_BAD,
+  MOOD_OKAY,
+  MOOD_GOOD,
+  MOOD_GREAT,
   MOOD_STATUS_ENUM,
   MOOD_SUBSTATUS_AWFUL,
   MOOD_SUBSTATUS_BAD,
