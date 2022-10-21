@@ -1,94 +1,39 @@
 const { Schema, model } = require("mongoose");
+const {
+  MOOD_STATUS_ENUM,
+  MOOD_SUBSTATUS_AWFUL,
+  MOOD_SUBSTATUS_BAD,
+  MOOD_SUBSTATUS_OKAY,
+  MOOD_SUBSTATUS_GOOD,
+  MOOD_SUBSTATUS_GREAT,
+} = require("../utils/mood-enum-data");
 
 const moodSchema = new Schema(
   {
     status: {
       type: String,
-      required: ["Awful", "Bad", "Okay", "Good", "Great"],
+      required: MOOD_STATUS_ENUM,
       properties: {
-        Awful: {
-          enum: [
-            "Stressed",
-            "Lonely",
-            "Annoyed",
-            "Dissapointed",
-            "Anxious",
-            "Sad",
-            "Hurt",
-            "Angry",
-          ],
+        awful: {
+          enum: MOOD_SUBSTATUS_AWFUL,
         },
-        Bad: {
-          enum: [
-            "Bored",
-            "Stressed",
-            "Annoyed",
-            "Anxious",
-            "Tired",
-            "Lonely",
-            "Dissapointed",
-            "Sad",
-          ],
+        bad: {
+          enum: MOOD_SUBSTATUS_BAD,
         },
-        Okay: {
-          enum: [
-            "Hopeful",
-            "Content",
-            "Distracted",
-            "Tired",
-            "Calm",
-            "Confused",
-            "Bored",
-            "Stressed",
-          ],
+        okay: {
+          enum: MOOD_SUBSTATUS_OKAY,
         },
-        Good: {
-          enum: [
-            "Happy",
-            "Grateful",
-            "Relaxed",
-            "Calm",
-            "Excited",
-            "Confident",
-            "Hopeful",
-            "Content",
-          ],
+        good: {
+          enum: MOOD_SUBSTATUS_GOOD,
         },
-        Great: {
-          enum: [
-            "Blessed",
-            "Happy",
-            "Grateful",
-            "Relaxed",
-            "Inspired",
-            "Excited",
-            "Confident",
-            "Hopeful",
-          ],
+        great: {
+          enum: MOOD_SUBSTATUS_GREAT,
         },
       },
     },
     activity: {
-      type: String,
-      enum: [
-        "Family",
-        "Friends",
-        "Food",
-        "Relationships",
-        "Healthy",
-        "Exercise",
-        "Spirituality",
-        "Movies",
-        "Reading",
-        "Gaming",
-        "Shopping",
-        "Travel",
-        "Work",
-        "Sleep",
-        "Studies",
-        "Finances",
-      ],
-      required: true,
+      type: Schema.Types.ObjectId,
+      ref: "Activity",
     },
     description: {
       type: String,

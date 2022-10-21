@@ -5,6 +5,11 @@ const activitySchema = new Schema({
     type: String,
     required: true,
   },
+  custom: {
+    type: Boolean,
+    required: true,
+    default: true,
+  },
   owner: {
     type: Schema.Types.ObjectId,
     ref: "User",
