@@ -1,5 +1,10 @@
 const { Schema, model } = require("mongoose");
 const {
+  MOOD_AWFUL,
+  MOOD_BAD,
+  MOOD_OKAY,
+  MOOD_GOOD,
+  MOOD_GREAT,
   MOOD_STATUS_ENUM,
   MOOD_SUBSTATUS_AWFUL,
   MOOD_SUBSTATUS_BAD,
@@ -16,19 +21,19 @@ const moodSchema = new Schema(
       required: true,
     },
     substatus: {
-      awful: {
+      [MOOD_AWFUL]: {
         enum: MOOD_SUBSTATUS_AWFUL,
       },
-      bad: {
+      [MOOD_BAD]: {
         enum: MOOD_SUBSTATUS_BAD,
       },
-      okay: {
+      [MOOD_OKAY]: {
         enum: MOOD_SUBSTATUS_OKAY,
       },
-      good: {
+      [MOOD_GOOD]: {
         enum: MOOD_SUBSTATUS_GOOD,
       },
-      great: {
+      [MOOD_GREAT]: {
         enum: MOOD_SUBSTATUS_GREAT,
       },
     },
