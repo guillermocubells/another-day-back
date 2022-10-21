@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User.model");
-const { BAD_REQUEST } = require("../utils/status-codes");
+const { BAD_REQUEST, UNAUTHORIZED } = require("../utils/status-codes");
 
 function isLoggedIn(req, res, next) {
   if (!req.headers.authorization) {
