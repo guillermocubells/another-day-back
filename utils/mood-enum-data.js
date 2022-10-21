@@ -55,25 +55,6 @@ const MOOD_SUBSTATUS_GREAT = [
   "Hopeful",
 ];
 
-const MOOD_ACTIVITIES_ENUM = [
-  "Family",
-  "Friends",
-  "Food",
-  "Relationships",
-  "Healthy",
-  "Exercise",
-  "Spirituality",
-  "Movies",
-  "Reading",
-  "Gaming",
-  "Shopping",
-  "Travel",
-  "Work",
-  "Sleep",
-  "Studies",
-  "Finances",
-];
-
 module.exports = {
   MOOD_STATUS_ENUM,
   MOOD_SUBSTATUS_AWFUL,
@@ -81,5 +62,4 @@ module.exports = {
   MOOD_SUBSTATUS_OKAY,
   MOOD_SUBSTATUS_GOOD,
   MOOD_SUBSTATUS_GREAT,
-  MOOD_ACTIVITIES_ENUM,
 };
