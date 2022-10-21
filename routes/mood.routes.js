@@ -3,7 +3,7 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 const moodRouter = express.Router();
 
 const Mood = require("../models/Mood.model");
-const { ALL_GOOD, CREATED } = require("../utils/status-codes");
+const { ALL_GOOD, CREATED, BAD_REQUEST } = require("../utils/status-codes");
 
 moodRouter.use(isLoggedIn);
 
@@ -25,18 +25,20 @@ moodRouter.post("/create", (req, res) => {
   const { user } = req;
 
   // get values from frontend
-  const { status, properties, activity, description, date, image } = req.body;
+  const { status, properties, activities, description, date, image } = req.body;
 
   //   do some validation on the form
   if (!status) {
-    return res.json();
+    return res.status
+      .apply(BAD_REQUEST)
+      .json({ errorMessage: "No status provided..." });
   }
 
   //   create new mood
   Mood.create({
     status,
     properties,
-    activity,
+    activities,
     description,
     image,
     date,
