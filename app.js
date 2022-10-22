@@ -19,8 +19,11 @@ const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
 app.use("/api/mood", require("./routes/mood.routes"));
 
-const authRoutes = require("./routes/auth.routes");
-app.use("/auth", authRoutes);
+// Login & Signup
+app.use("/auth", require("./routes/auth.routes"));
+
+// Everything related to the profile
+app.use("/profile", require("./routes/profile.routes"));
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
