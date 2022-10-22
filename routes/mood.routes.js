@@ -19,13 +19,28 @@ moodRouter.get("/:id", (req, res) => {
     .catch();
 });
 
+// const FAKE_MOOD = {
+//   status: "Awful",
+//   substatus: "Stressed",
+//   activities: "Shopping",
+//   description: "WOW SUCH GOAL",
+//   date: new Date(),
+// };
+
 // create mood
 moodRouter.post("/create", (req, res) => {
   //   get the user
   const { user } = req;
 
   // get values from frontend
-  const { status, properties, activities, description, date, image } = req.body;
+  const {
+    status,
+    substatus,
+    activities,
+    description,
+    date = new Date(),
+    image,
+  } = req.body;
 
   //   do some validation on the form
   if (!status) {
@@ -37,7 +52,7 @@ moodRouter.post("/create", (req, res) => {
   //   create new mood
   Mood.create({
     status,
-    properties,
+    substatus: substatus && { [status]: substatus },
     activities,
     description,
     image,
