@@ -9,12 +9,14 @@ profileRouter.use(isLoggedIn);
 // Get Profile
 profileRouter.get("/", (req, res) => {
   const { user } = req;
+
+  //prevent password being send on response
   const { password, ...userWithoutPassword } = user._doc;
+
   res.json({ userWithoutPassword });
 });
 
 // Edit Profile
-profileRouter.get("/edit", (req, res) => {});
 profileRouter.post("/edit", (req, res) => {});
 
 // Delete Profile
