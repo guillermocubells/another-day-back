@@ -18,22 +18,28 @@ const moodSchema = new Schema(
     },
     substatus: {
       [MOOD_AWFUL]: {
+        type: String,
         enum: MOOD_SUBSTATUS[MOOD_AWFUL],
       },
       [MOOD_BAD]: {
+        type: String,
         enum: MOOD_SUBSTATUS[MOOD_BAD],
       },
       [MOOD_OKAY]: {
+        type: String,
         enum: MOOD_SUBSTATUS[MOOD_OKAY],
       },
       [MOOD_GOOD]: {
+        type: String,
         enum: MOOD_SUBSTATUS[MOOD_GOOD],
       },
       [MOOD_GREAT]: {
+        type: String,
         enum: MOOD_SUBSTATUS[MOOD_GREAT],
       },
     },
-    activities: [{ type: Schema.Types.ObjectId, ref: "Activity" }],
+    activities: { type: [String] },
+    // activities: [{ type: Schema.Types.ObjectId, ref: "Activity" }],
     description: {
       type: String,
     },
