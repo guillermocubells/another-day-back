@@ -48,11 +48,21 @@ profileRouter.post("/edit-profile", (req, res) => {
         return;
       }
       User.findByIdAndUpdate(user._id, { name, email })
-        .then((possibleUser) => {
-          const { email, name, _id } = possibleUser;
-          const updatedUser = { email, name, _id };
+        .then((updatedUser) => {
+          // Deconstruct the user object to omit the password
+          const { _id, email, name } = updatedUser;
 
-          res.status(200).json(updatedUser);
+          // Create an object that will be set as the token payload
+          const payload = { _id, email, name };
+
+          // Create a JSON Web Token and sign it
+          const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
+            algorithm: "HS256",
+            expiresIn: "6h",
+          });
+
+          // Send the token as the response
+          res.status(200).json({ authToken: authToken });
         })
         .catch((error) => {
           res.status(500).json({ message: "User not found.." });
