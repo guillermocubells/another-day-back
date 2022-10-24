@@ -7,7 +7,20 @@ const { ALL_GOOD, CREATED, BAD_REQUEST } = require("../utils/status-codes");
 
 moodRouter.use(isLoggedIn);
 
-// view mood
+// Get all moods By current user
+moodRouter.get("/get-all", (req, res) => {
+  const { user } = req;
+
+  Mood.find({ owner: user._id })
+    .then((allMoodsByUser) => {
+      res.status(ALL_GOOD).json(allMoodsByUser);
+    })
+    .catch((error) => {
+      res.status(500).json({ message: "Data not found.." });
+    });
+});
+
+// view single mood
 moodRouter.get("/:id", (req, res) => {
   const { user } = req;
   const { id } = req.params;
