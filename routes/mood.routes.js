@@ -25,7 +25,7 @@ moodRouter.get("/:id", (req, res) => {
   const { user } = req;
   const { id } = req.params;
 
-  Mood.findOne({ id, owner: user._id })
+  Mood.findOne({ _id: id, owner: user._id })
     .then((possibleMood) => {
       res.status(ALL_GOOD).json(possibleMood);
     })
