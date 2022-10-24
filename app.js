@@ -25,6 +25,10 @@ app.use("/auth", require("./routes/auth.routes"));
 // Everything related to the profile
 app.use("/profile", require("./routes/profile.routes"));
 
+// Dashboard Routes
+
+app.use("/dashboard", require("./routes/dashboard.routes"));
+
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
