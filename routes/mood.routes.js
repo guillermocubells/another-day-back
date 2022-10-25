@@ -1,4 +1,5 @@
 const express = require("express");
+const { addMonths, isValid } = require("date-fns");
 const isLoggedIn = require("../middleware/isLoggedIn");
 const moodRouter = express.Router();
 
@@ -32,20 +33,10 @@ moodRouter.get("/:id", (req, res) => {
     .catch();
 });
 
-// const FAKE_MOOD = {
-//   status: "Awful",
-//   substatus: "Stressed",
-//   activities: "Shopping",
-//   description: "WOW SUCH GOAL",
-//   date: new Date(),
-// };
-
 // create mood
 moodRouter.post("/create", (req, res) => {
-  //   get the user
   const { user } = req;
 
-  // get values from frontend
   const {
     status,
     substatus,
