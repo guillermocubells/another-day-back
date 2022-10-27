@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 const activitySchema = new Schema({
-  description: {
+  title: {
     type: String,
     required: true,
   },
