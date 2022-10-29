@@ -83,7 +83,7 @@ moodRouter.post("/create", async (req, res) => {
     status,
     substatus,
     activities,
-    description,
+    journal,
     date = new Date(),
     image,
   } = req.body;
@@ -98,7 +98,7 @@ moodRouter.post("/create", async (req, res) => {
     status,
     substatus: substatus && { [status]: substatus },
     activities: await createActivityIfNotProvided(activities, user),
-    description,
+    journal,
     image,
     date: new Date(date),
     owner: user._id,
