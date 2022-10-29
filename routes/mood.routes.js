@@ -28,13 +28,23 @@ moodRouter.get("/:id", (req, res) => {
 
   Mood.findOne({ _id: id, owner: user._id })
     .then((possibleMood) => {
-      res.status(ALL_GOOD).json(possibleMood);
+      return res.status(ALL_GOOD).json(possibleMood);
     })
-    .catch();
+    .catch((error) => {
+      return res
+        .status(500)
+        .json({ errorMessage: "Nothing Found. Try Again..." });
+    });
 });
 
+async function createActivityIfNotProvided(activities) {
+  if (!activities || !activities.length) {
+    return undefined;
+  }
+}
+
 // create mood
-moodRouter.post("/create", (req, res) => {
+moodRouter.post("/create", async (req, res) => {
   const { user } = req;
 
   const {
@@ -48,9 +58,7 @@ moodRouter.post("/create", (req, res) => {
 
   //   do some validation on the form
   if (!status) {
-    return res.status
-      .apply(BAD_REQUEST)
-      .json({ errorMessage: "No status provided..." });
+    return res.status(BAD_REQUEST).json({ message: "No status provided" });
   }
 
   //   create new mood
@@ -60,7 +68,7 @@ moodRouter.post("/create", (req, res) => {
     activities,
     description,
     image,
-    date,
+    date: new Date(date),
     owner: user._id,
   })
     .then((createdMood) => {
