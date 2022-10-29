@@ -4,7 +4,10 @@ const isLoggedIn = require("../middleware/isLoggedIn");
 const moodRouter = express.Router();
 
 const Mood = require("../models/Mood.model");
+const Activity = require("../models/Activity.model");
+
 const { ALL_GOOD, CREATED, BAD_REQUEST } = require("../utils/status-codes");
+const { ACTIVITIES } = require("../utils/activity-data");
 
 moodRouter.use(isLoggedIn);
 
@@ -13,6 +16,7 @@ moodRouter.get("/get-all", (req, res) => {
   const { user } = req;
 
   Mood.find({ owner: user._id })
+    .populate("activities")
     .then((allMoodsByUser) => {
       res.status(ALL_GOOD).json(allMoodsByUser);
     })
@@ -27,6 +31,7 @@ moodRouter.get("/:id", (req, res) => {
   const { id } = req.params;
 
   Mood.findOne({ _id: id, owner: user._id })
+    .populate("activities")
     .then((possibleMood) => {
       return res.status(ALL_GOOD).json(possibleMood);
     })
@@ -37,10 +42,37 @@ moodRouter.get("/:id", (req, res) => {
     });
 });
 
-async function createActivityIfNotProvided(activities) {
+async function createActivityIfNotProvided(activities, user) {
   if (!activities || !activities.length) {
     return undefined;
   }
+
+  const findActivities = await Activity.find({
+    $and: [
+      { title: { $in: activities } },
+      { $or: [{ custom: false }, { owner: user._id }] },
+    ],
+  });
+
+  const newActivities = activities.filter((item) => {
+    return !findActivities.some((e) => e.title === item);
+  });
+
+  // if (!newActivities.length) {
+  //   return findActivities;
+  // }
+
+  const newActivitiesArray = newActivities.map((item) => {
+    return { title: item.trim(), owner: user._id, custom: true };
+  });
+
+  const createdActivities = await Activity.insertMany(newActivitiesArray);
+
+  if (!createdActivities.length) {
+    return findActivities;
+  }
+
+  return [...findActivities, ...createdActivities];
 }
 
 // create mood
@@ -65,14 +97,13 @@ moodRouter.post("/create", async (req, res) => {
   Mood.create({
     status,
     substatus: substatus && { [status]: substatus },
-    activities,
+    activities: await createActivityIfNotProvided(activities, user),
     description,
     image,
     date: new Date(date),
     owner: user._id,
   })
     .then((createdMood) => {
-      console.log(createdMood);
       res.status(CREATED).json(createdMood);
     })
     .catch();
