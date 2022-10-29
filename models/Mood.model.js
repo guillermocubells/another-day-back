@@ -38,9 +38,8 @@ const moodSchema = new Schema(
         enum: MOOD_SUBSTATUS[MOOD_GREAT],
       },
     },
-    // activities: { type: [String] },
     activities: [{ type: Schema.Types.ObjectId, ref: "Activity" }],
-    description: {
+    journal: {
       type: String,
     },
     date: {
