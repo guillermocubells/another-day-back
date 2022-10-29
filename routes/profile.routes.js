@@ -68,7 +68,9 @@ profileRouter.post("/edit-profile", (req, res) => {
           res.status(500).json({ message: "User not found.." });
         });
     })
-    .catch(() => {});
+    .catch((error) => {
+      res.status(500).json({ message: "User not found.." });
+    });
 });
 
 // Change Password
@@ -142,7 +144,7 @@ profileRouter.post("/change-password", (req, res) => {
       }
     })
     .catch((error) => {
-      console.log(error);
+      res.status(500).json({ message: "User not found.." });
     });
 });
 
@@ -193,7 +195,9 @@ profileRouter.post("/delete-user", (req, res) => {
     .then((allStuffDeleted) => {
       res.json({ hi: "hi" });
     })
-    .catch((error) => {});
+    .catch((error) => {
+      res.status(500).json({ message: "User not found.." });
+    });
 });
 
 module.exports = profileRouter;
