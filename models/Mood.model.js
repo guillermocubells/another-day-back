@@ -7,6 +7,7 @@ const {
   MOOD_GREAT,
   MOOD_STATUS_ENUM,
   MOOD_SUBSTATUS,
+  MOOD_SCORE,
 } = require("../utils/mood-enum-data");
 
 const moodSchema = new Schema(
@@ -37,6 +38,11 @@ const moodSchema = new Schema(
         type: String,
         enum: MOOD_SUBSTATUS[MOOD_GREAT],
       },
+    },
+    score: {
+      type: Number,
+      min: MOOD_SCORE[MOOD_AWFUL],
+      max: MOOD_SCORE[MOOD_GREAT],
     },
     activities: [{ type: Schema.Types.ObjectId, ref: "Activity" }],
     journal: {

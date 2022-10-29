@@ -8,6 +8,7 @@ const Activity = require("../models/Activity.model");
 
 const { ALL_GOOD, CREATED, BAD_REQUEST } = require("../utils/status-codes");
 const { ACTIVITIES } = require("../utils/activity-data");
+const { MOOD_SCORE } = require("../utils/mood-enum-data");
 
 moodRouter.use(isLoggedIn);
 
@@ -92,11 +93,11 @@ moodRouter.post("/create", async (req, res) => {
   if (!status) {
     return res.status(BAD_REQUEST).json({ message: "No status provided" });
   }
-
   //   create new mood
   Mood.create({
     status,
     substatus: substatus && { [status]: substatus },
+    score: MOOD_SCORE[status],
     activities: await createActivityIfNotProvided(activities, user),
     journal,
     image,
