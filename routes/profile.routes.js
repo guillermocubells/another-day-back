@@ -41,12 +41,13 @@ profileRouter.post("/edit-profile", (req, res) => {
     res.status(400).json({ message: "Provide a valid email address." });
     return;
   }
+
   User.findOne({ email })
     .then((foundUser) => {
-      if (foundUser) {
-        res.status(400).json({ message: "User already exists." });
-        return;
+      if (foundUser && !foundUser._id.equals(user._id)) {
+        return res.status(400).json({ message: "User already exists." });
       }
+
       User.findByIdAndUpdate(user._id, { name, email })
         .then((updatedUser) => {
           // Deconstruct the user object to omit the password
