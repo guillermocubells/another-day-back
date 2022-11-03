@@ -7,7 +7,6 @@ const Mood = require("../models/Mood.model");
 const Activity = require("../models/Activity.model");
 
 const { ALL_GOOD, CREATED, BAD_REQUEST } = require("../utils/status-codes");
-const { ACTIVITIES } = require("../utils/activity-data");
 const { MOOD_SCORE } = require("../utils/mood-enum-data");
 
 moodRouter.use(isLoggedIn);
@@ -108,6 +107,53 @@ moodRouter.post("/create", async (req, res) => {
       res.status(CREATED).json(createdMood);
     })
     .catch();
+});
+
+moodRouter.post("/:id/edit", async (req, res) => {
+  const { user } = req;
+  const { id } = req.params;
+
+  const {
+    status,
+    substatus,
+    activities,
+    journal,
+    date = new Date(),
+    image,
+  } = req.body;
+
+  Mood.findOneAndUpdate(
+    { _id: id, owner: user._id },
+    {
+      status,
+      substatus: substatus && { [status]: substatus },
+      activities: await createActivityIfNotProvided(activities, user),
+      journal,
+      date,
+      image,
+    }
+  )
+    .then((possibleMood) => {
+      res.status(200).json({ possibleMood });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ message: "This is probably not yours..." });
+    });
+});
+
+moodRouter.get("/:id/delete", (req, res) => {
+  const { user } = req;
+  const { id } = req.params;
+
+  Mood.findOneAndDelete({ _id: id, owner: user._id })
+    .then((deletedMood) => {
+      res.status(200).json({ message: "byebye" });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ message: "excuse me, but this ain’t working..." });
+    });
 });
 
 module.exports = moodRouter;
